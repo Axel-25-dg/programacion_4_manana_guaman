@@ -8,7 +8,7 @@ data class Producto(
     val categoria: Categoria,
     val activo:    Boolean = true
 ) {
-    // ABSTRACCIÓN: el usuario consulta disponible sin saber la lógica
+    // ABSTRACCION: el usuario consulta disponible sin saber la logica
     val disponible: Boolean get() = activo && stock > 0
     val precioConIva: Double get() = precio * 1.19
 
@@ -19,10 +19,10 @@ data class Producto(
     }
 }
 
-// ENCAPSULAMIENTO: el estado del catálogo es privado y mutable internamente
+// ENCAPSULAMIENTO: el estado del catalogo es privado y mutable internamente
 object CatalogoProductos {
     private val categorias = mutableListOf(
-        Categoria(1, "Periféricos"),
+        Categoria(1, "Perifericos"),
         Categoria(2, "Pantallas"),
         Categoria(3, "Audio")
     )
@@ -36,7 +36,7 @@ object CatalogoProductos {
         return producto
     }
 
-    // ABSTRACCIÓN: interfaz pública limpia — solo lectura de listas
+    // ABSTRACCION: interfaz publica limpia — solo lectura de listas
     fun listar(): List<Producto>              = productos.toList()
     fun disponibles(): List<Producto>         = productos.filter { it.disponible }
     fun porCategoria(id: Int): List<Producto> = productos.filter { it.categoria.id == id }
@@ -45,13 +45,21 @@ object CatalogoProductos {
 }
 
 fun main() {
-    CatalogoProductos.agregarProducto("Teclado mecánico",   89.99, 15, 1)
-    CatalogoProductos.agregarProducto("Mouse inalámbrico",  29.99,  0, 1)
+    CatalogoProductos.agregarProducto("Teclado mecanico",   89.99, 15, 1)
+    CatalogoProductos.agregarProducto("Mouse inalambrico",  29.99,  0, 1)
     CatalogoProductos.agregarProducto("Monitor 27\"",      349.99,  5, 2)
     CatalogoProductos.agregarProducto("Auriculares BT",    149.99,  8, 3)
+    
+    // Incluir 3 productos mas al final
+    CatalogoProductos.agregarProducto("Memoria USB", 15.50, 20, 1)
+    CatalogoProductos.agregarProducto("Microfono", 45.00, 10, 3)
+    CatalogoProductos.agregarProducto("Cable HDMI", 12.00, 50, 1)
 
     println("=== Todos los productos ===")
-    CatalogoProductos.listar().forEach { p ->
+    
+    // Recorrer todos los productos con for
+    val listaCompleta = CatalogoProductos.listar()
+    for (p in listaCompleta) {
         val estado = if (p.disponible) "✅" else "❌"
         println("$estado ${p.nombre} — ${"%.2f".format(p.precioConIva)} (con IVA)")
     }
