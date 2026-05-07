@@ -5,10 +5,11 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material3.MaterialTheme
-import com.ute.compose.ui.material3.Paso01SumaScreen
-import com.ute.compose.ui.material3.Paso01TextFieldScreen
 import com.ute.compose.ui.material3.Paso02CardScreen
-import com.ute.compose.ui.screens.*
+import com.ute.compose.ui.material3.Paso03LazyColumnScreen
+import com.ute.compose.ui.material3.Paso04ScaffoldScreen
+import com.ute.compose.ui.material3.Paso05NavBarScreen
+import com.ute.compose.ui.material3.Paso06DialogosScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,12 +29,13 @@ class MainActivity : ComponentActivity() {
 
                 // Componetes de Material 3:
                 // Paso01TextFieldScreen()
-                Paso01SumaScreen()
-                //Paso02CardScreen()
-                // Paso03_LazyColumnScreen()
-                // Paso04_ScaffoldScreen()
-                // Paso05_NavBarScreen()
-                // Paso06_DialogosScreen()
+                // Paso01SumaScreen()
+                // CompraTienda()
+                // Paso02CardScreen()
+                // Paso03LazyColumnScreen()
+                // Paso04ScaffoldScreen()
+                // Paso05NavBarScreen()
+                Paso06DialogosScreen()
             }
         }
     }
