@@ -1,4 +1,3 @@
-
 package com.shopapp.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape

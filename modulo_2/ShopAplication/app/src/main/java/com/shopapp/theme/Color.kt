@@ -1,6 +1,5 @@
 package com.shopapp.theme
 
-
 import androidx.compose.ui.graphics.Color
 
 val Background = Color(0xFF0A0A0F)
