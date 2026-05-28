@@ -1,35 +1,36 @@
-/**
- * Operadores aritmeticos aplicados a XP y tiempos de estudio
- * Ejemplo MP - 06
- */
 fun main() {
-    println("Calculadora de Progreso de Idiomas")
-    val xpPorLeccion = 100
-    val leccionesRealizadas = 3
+    println("Calculo de Estadisticas de Aprendizaje")
+    val xpLeccion = 150
+    val bonoRacha = 50
 
-    println("Resumen de hoy:")
-    println("XP total ganado: $xpPorLeccion * $leccionesRealizadas = ${xpPorLeccion * leccionesRealizadas}")
+    println("Total XP ganado en esta leccion:")
+    println("$xpLeccion + $bonoRacha = ${xpLeccion + bonoRacha} XP")
 
-    val tiempoMinutos = 45
-    val sesiones = 2
-    println("Tiempo total de estudio: $tiempoMinutos + $tiempoMinutos = ${tiempoMinutos + sesiones}")
+    val xpTotal = 1000
+    val penalizacionError = 20
+    println("XP despues de penalizacion por errores:")
+    println("$xpTotal - $penalizacionError = ${xpTotal - penalizacionError} XP")
 
-    println("Promedio de XP por minuto:")
-    println("${xpPorLeccion * leccionesRealizadas} / 90 = ${(xpPorLeccion * leccionesRealizadas) / 90}")
+    val multiplicadorPremium = 2
+    println("XP con multiplicador Premium:")
+    println("$xpLeccion * $multiplicadorPremium = ${xpLeccion * multiplicadorPremium} XP")
 
-    println("Operadores de Asignacion Compuesta para Racha")
-    var rachaDias = 5
+    val totalMinutosSemana = 120
+    val diasEstudio = 5
+    println("Promedio de minutos por dia:")
+    println("$totalMinutosSemana / $diasEstudio = ${totalMinutosSemana / diasEstudio} min/dia")
 
-    rachaDias += 1
-    println("Racha incrementada (+=1): $rachaDias")
+    val palabrasPorPagina = 25
+    val totalPalabras = 107
+    println("Palabras sobrantes en la ultima pagina:")
+    println("$totalPalabras % $palabrasPorPagina = ${totalPalabras % palabrasPorPagina} palabras")
 
-    rachaDias -= 1
-    println("Penalizacion de racha (-=1): $rachaDias")
-
-    // Incremento y decremento
     var vidas = 5
+    println("Vidas iniciales: $vidas")
     vidas--
-    println("Perdiste una vida en la leccion: $vidas")
-    vidas++
-    println("Recuperaste una vida: $vidas")
+    println("Vidas tras un error: $vidas")
+    
+    var xpAcumulada = 500
+    xpAcumulada += 100
+    println("XP Acumulada tras completar reto: $xpAcumulada")
 }

@@ -1,25 +1,21 @@
-/**
- * Manejo de Strings y plantillas en el proyecto de idiomas
- * Ejemplo MP - 04
- */
 fun main() {
     val nombre = "Henry"
-    val apellido = "Guaman"
-    val nivel = 5
+    val idioma = "Japones"
+    val racha = 15
     
-    println("Hola, $nombre")
-
-    println("Usuario: ${nombre.uppercase()} ${apellido.uppercase()}")
+    println("Bienvenido de vuelta, $nombre")
+    println("Idioma actual: ${idioma.uppercase()}")
     
-    val infoCurso = "Nivel del Curso: ${nivel + 1} (Proximamente)"
-    println(infoCurso)
+    val resumenPerfil = "Estudiante: ${nombre.uppercase()} | Nivel: Intermedio"
+    println(resumenPerfil)
+    
+    println("Dias de racha: ${racha + 1} (si completas la leccion de hoy)")
     
     val tarjetaEstudiante = """
-        |DATOS DEL ESTUDIANTE
-        |Nombre: $nombre $apellido
-        |Nivel Actual: $nivel
-        |Estado: ${if (nivel >= 1) "Activo" else "Nuevo"}
+        |Estudiante: $nombre
+        |Idioma: $idioma
+        |Racha: $racha dias
+        |Estado de suscripcion: ${if (racha >= 10) "Premium" else "Basico"}
     """.trimMargin()
-    
     println(tarjetaEstudiante)
 }

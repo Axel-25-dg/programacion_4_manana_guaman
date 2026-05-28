@@ -1,17 +1,19 @@
-/**
- * Ejemplo MP - 09
- */
 fun main() {
-    println("Sistema de Evaluacion de Leccion")
-    print("Ingrese el puntaje obtenido (0-100): ")
-    val puntaje = readLine()?.toDoubleOrNull() ?: 0.0
-
-    if (puntaje >= 90.0) {
-        println("Excelente: Has dominado este tema!")
-    } else if (puntaje >= 70.0) {
-        println("Bien hecho: Has aprobado la leccion.")
-    } else {
-        println("Necesitas practicar un poco mas este vocabulario.")
+    println("Alerta de Racha de Estudiante")
+    val rachaActual = 31
+    val metaRacha = 30
+    
+    if (rachaActual > metaRacha) {
+        println("Felicidades! Has superado tu meta de racha.")
     }
-    println("Puntaje registrado: $puntaje puntos")
+    
+    val xpGanada = 550
+    if (xpGanada >= 500) {
+        println("Has ganado el cofre de XP diario!")
+    }
+
+    val leccionesHoy = 1
+    if (leccionesHoy > 0) {
+        println("Has mantenido tu racha por hoy.")
+    }
 }

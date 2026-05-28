@@ -1,7 +1,3 @@
-/**
- * Tipos de datos numericos para estadisticas de aprendizaje
- * Ejemplo MP - 03
- */
 fun main() {
     println("Estadisticas de Aprendizaje")
     
@@ -23,7 +19,6 @@ fun main() {
     val progresoModulo: Double = 0.75234
     println("Progreso del modulo actual: $progresoModulo")
 
-    // Inferido y Reflexión
     val cursoActivo = "Ingles Avanzado"
     val rachaDias = 30
     

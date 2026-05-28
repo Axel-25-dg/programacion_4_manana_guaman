@@ -1,6 +1,3 @@
-/**
- * Ejemplo MP - 02
- */
 fun main() {
     val nombreEstudiante = "Henry"
     val edad: Int = 22
