@@ -1,18 +1,26 @@
-/**
- * Operadores de comparacion para metas de aprendizaje
- * Ejemplo MP - 07
- */
 fun main() {
-    println("Verificacion de Metas Diarias")
-    val palabrasMeta = 20
-    val palabrasAprendidas = 25
+    println("Comparacion de Rendimiento de Estudiante")
+    val puntajeExamen = 85
+    val puntajeMinimoAprobacion = 70
+    val rachaActual = 15
+    val metaRacha = 30
 
-    println("Meta alcanzada? (==): ${palabrasAprendidas == palabrasMeta}")
-    println("Superoo la meta? (>): ${palabrasAprendidas > palabrasMeta}")
-    println("Al menos alcanzo la meta? (>=): ${palabrasAprendidas >= palabrasMeta}")
-    println("Aun no llega a la meta? (<): ${palabrasAprendidas < palabrasMeta}")
+    println("Puntaje Examen: $puntajeExamen")
+    println("Puntaje Minimo: $puntajeMinimoAprobacion")
+    println("Aprobo el examen? ${puntajeExamen >= puntajeMinimoAprobacion}")
+
+    println("Racha actual: $rachaActual dias")
+    println("Meta alcanzada? ${rachaActual >= metaRacha}")
+
+    val precisionEstudianteA = 92.5
+    val precisionEstudianteB = 92.5
+    println("Precisiones iguales? ${precisionEstudianteA == precisionEstudianteB}")
+
+    val nivelRequerido = 5
+    val nivelActual = 3
+    println("Nivel suficiente para el curso avanzado? ${nivelActual >= nivelRequerido}")
     
-    val idiomaActual = "Frances"
-    val idiomaRequerido = "Ingles"
-    println("Es el idioma correcto? (.equals): ${idiomaActual.equals(idiomaRequerido)}")
+    val erroresPermitidos = 3
+    val erroresCometidos = 4
+    println("Leccion fallida por exceso de errores? ${erroresCometidos > erroresPermitidos}")
 }

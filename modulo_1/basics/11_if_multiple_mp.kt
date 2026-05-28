@@ -1,26 +1,21 @@
-/**
- * Ejemplo MP - 11
- */
 fun main() {
-    println("Clasificacion de Fluidez")
-    println("Ingrese cantidad de palabras aprendidas:")
+    println("Clasificacion de Rendimiento del Estudiante")
+    println("Ingrese su precision promedio (%):")
     
-    val palabras = readLine()?.toIntOrNull() ?: 0
+    val precision = readLine()?.toIntOrNull() ?: 0
 
-    val rango = if (palabras <= 500) {
-        "Principiante (A1)"
-    } else if (palabras <= 1000) {
-        "Elemental (A2)"
-    } else if (palabras <= 2000) {
-        "Intermedio (B1)"
-    } else if (palabras <= 4000) {
-        "Intermedio Alto (B2)"
-    } else if (palabras <= 8000) {
-        "Avanzado (C1)"
+    val rango = if (precision >= 95) {
+        "Leyenda"
+    } else if (precision >= 85) {
+        "Maestro"
+    } else if (precision >= 70) {
+        "Experto"
+    } else if (precision >= 50) {
+        "Aprendiz"
     } else {
-        "Maestria (C2)"
+        "Novato"
     }
 
-    println("Tu rango actual es: $rango")
-    println("ESTADO: ${rango.uppercase()}")
-}   
+    println("Rango de rendimiento: $rango")
+    println("Rango en mayusculas: ${rango.uppercase()}")
+}

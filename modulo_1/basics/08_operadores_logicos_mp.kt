@@ -1,20 +1,25 @@
-/**
- * Operadores logicos para acceso a cursos avanzados
- * Ejemplo MP - 08
- */
 fun main() {
-    println("Validacion de Requisitos para Examen de Certificacion")
-    val nivelSuficiente = true
-    val rachaActiva = true
-    val esPremium = false
+    println("Verificacion de Elegibilidad de Estudiante")
+    val suscripcionPremium = true
+    val rachaSuficiente = false
+    val completoLecionesSemana = true
 
-    println("&& - Requerido: Nivel Suficiente Y Racha Activa")
-    println("Puede dar el examen? ${nivelSuficiente && rachaActiva}")
+    println("Elegible para bono especial (Premium Y Racha)?")
+    println("suscripcionPremium && rachaSuficiente = ${suscripcionPremium && rachaSuficiente}")
 
-    println("|| - Requerido: Racha Activa O Ser Usuario Premium")
-    println("Tiene beneficios extra? ${rachaActiva || esPremium}")
+    println("Elegible para recordatorio (Premium O Lecciones completadas)?")
+    println("suscripcionPremium || completoLecionesSemana = ${suscripcionPremium || completoLecionesSemana}")
 
-    println("! - Not Lógico")
-    println("Es usuario gratuito? ${!esPremium}")
-    println("Perdio la racha? ${!rachaActiva}")
+    println("Estado de suscripcion invertido:")
+    println("!suscripcionPremium = ${!suscripcionPremium}")
+
+    val tieneBeca = true
+    val esEstudianteNuevo = false
+    println("Acceso a contenido gratuito (Beca O Estudiante Nuevo)?")
+    println("${tieneBeca || esEstudianteNuevo}")
+
+    val cursoCompletado = true
+    val examenAprobado = true
+    println("Certificado emitido? (Curso completado Y Examen aprobado)")
+    println("${cursoCompletado && examenAprobado}")
 }

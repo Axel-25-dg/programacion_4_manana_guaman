@@ -1,17 +1,20 @@
-/**
- * Ejemplo MP - 10
- */
 fun main() {
-    println("Verificacion de Nivel de Membresia")
-    print("Ingrese la cantidad de lecciones completadas: ")
-    val lecciones = readLine()?.toIntOrNull() ?: 0
+    println("Resultado del Examen de Idioma")
+    val puntajeExamen = 65
+    val puntajeAprobatorio = 70
 
-    if (lecciones >= 100) {
-        println("Usuario Oro: Acceso ilimitado a todos los idiomas.")
-    } else if (lecciones >= 50) {
-        println("Usuario Plata: Acceso a 3 idiomas simultaneos.")
+    if (puntajeExamen >= puntajeAprobatorio) {
+        println("Felicidades! Has aprobado el examen.")
+        println("Puedes avanzar al siguiente nivel.")
     } else {
-        println("Usuario Bronce: Acceso a 1 idioma.")
+        println("Lo sentimos, no has alcanzado el puntaje minimo.")
+        println("Te recomendamos repasar las lecciones anteriores.")
     }
-    println("Lecciones totales: $lecciones")
+
+    val rachaActiva = true
+    if (rachaActiva) {
+        println("Tu racha esta protegida.")
+    } else {
+        println("Cuidado! Podrias perder tu racha si no practicas hoy.")
+    }
 }
