@@ -1,6 +1,4 @@
-// data/remote/dto/UserDto.kt
 package com.shopapp.data.remote.dto
-
 import com.google.gson.annotations.SerializedName
 import com.shopapp.domain.model.User
 import com.shopapp.domain.model.UserPayload
