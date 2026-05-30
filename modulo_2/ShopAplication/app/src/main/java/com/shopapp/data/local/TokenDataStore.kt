@@ -1,5 +1,4 @@
 package com.shopapp.data.local
-// data/local/TokenDataStore.kt
 
 import android.content.Context
 import androidx.datastore.core.DataStore

@@ -1,9 +1,8 @@
+
 package com.shopapp.di
 
-import com.shopapp.data.repository.CategoryRepositoryImpl
-import com.shopapp.data.repository.ProductRepositoryImpl
-import com.shopapp.domain.repository.CategoryRepository
-import com.shopapp.domain.repository.ProductRepository
+import com.shopapp.data.repository.*
+import com.shopapp.domain.repository.*
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -15,12 +14,14 @@ import javax.inject.Singleton
 abstract class RepositoryModule {
 
     @Binds @Singleton
-    abstract fun bindCategoryRepository(
-        impl: CategoryRepositoryImpl,
-    ): CategoryRepository
+    abstract fun bindAuthRepository(impl: AuthRepositoryImpl): AuthRepository
 
     @Binds @Singleton
-    abstract fun bindProductRepository(
-        impl: ProductRepositoryImpl,
-    ): ProductRepository
+    abstract fun bindCategoryRepository(impl: CategoryRepositoryImpl): CategoryRepository
+
+    @Binds @Singleton
+    abstract fun bindProductRepository(impl: ProductRepositoryImpl): ProductRepository
+
+    @Binds @Singleton
+    abstract fun bindOrderRepository(impl: OrderRepositoryImpl): OrderRepository
 }
