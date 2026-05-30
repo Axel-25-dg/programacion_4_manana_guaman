@@ -16,23 +16,25 @@ class ProductRepositoryImpl @Inject constructor(
     private val api: ProductApi,
 ) : ProductRepository {
 
-    override suspend fun getProducts(filters: ProductFilters): Result<Pair<List<Product>, Int>> = runCatching {
-        val queryMap = mutableMapOf<String, String>()
-        filters.category?.let { queryMap["category"] = it.toString() }
-        filters.search?.let { queryMap["search"] = it }
-        filters.priceMin?.let { queryMap["min_price"] = it.toString() }
-        filters.priceMax?.let { queryMap["max_price"] = it.toString() }
-        filters.ordering?.let { queryMap["ordering"] = it }
-        queryMap["page"] = filters.page.toString()
-
-        val response = api.getProducts(queryMap)
-        if (response.isSuccessful) {
-            val body = response.body()!!
-            body.results.map { it.toDomain() } to body.count
-        } else {
-            error("Error ${response.code()}")
+    override suspend fun getProducts(filters: ProductFilters): Result<Pair<List<Product>, Int>> =
+        runCatching {
+            val params = buildMap<String, String> {
+                filters.search?.let   { put("search",    it) }
+                filters.category?.let { put("category",  it.toString()) }
+                filters.priceMin?.let { put("price_min", it.toString()) }
+                filters.priceMax?.let { put("price_max", it.toString()) }
+                filters.stockMin?.let { put("stock_min", it.toString()) }
+                filters.isActive?.let { put("is_active", it.toString()) }
+                filters.ordering?.let { put("ordering",  it) }
+                put("page",      filters.page.toString())
+                put("page_size", filters.pageSize.toString())
+            }
+            val response = api.getProducts(params)
+            if (response.isSuccessful) {
+                val body = response.body()!!
+                Pair(body.results.map { it.toDomain() }, body.count)
+            } else error("Error ${response.code()}")
         }
-    }
 
     override suspend fun getProduct(id: Int): Result<Product> = runCatching {
         val response = api.getProduct(id)
@@ -43,14 +45,15 @@ class ProductRepositoryImpl @Inject constructor(
     override suspend fun createProduct(payload: ProductPayload): Result<Product> = runCatching {
         val response = api.createProduct(payload.toRequest())
         if (response.isSuccessful) response.body()!!.toDomain()
-        else error("Error ${response.code()}")
+        else error("Error ${response.code()}: ${response.errorBody()?.string()}")
     }
 
-    override suspend fun updateProduct(id: Int, payload: ProductPayload): Result<Product> = runCatching {
-        val response = api.updateProduct(id, payload.toRequest())
-        if (response.isSuccessful) response.body()!!.toDomain()
-        else error("Error ${response.code()}")
-    }
+    override suspend fun updateProduct(id: Int, payload: ProductPayload): Result<Product> =
+        runCatching {
+            val response = api.updateProduct(id, payload.toRequest())
+            if (response.isSuccessful) response.body()!!.toDomain()
+            else error("Error ${response.code()}: ${response.errorBody()?.string()}")
+        }
 
     override suspend fun deleteProduct(id: Int): Result<Unit> = runCatching {
         val response = api.deleteProduct(id)
@@ -66,15 +69,14 @@ class ProductRepositoryImpl @Inject constructor(
     override suspend fun getStats(): Result<Map<String, Any>> = runCatching {
         val response = api.getStats()
         if (response.isSuccessful) {
-            val stats = response.body()!!
+            val s = response.body()!!
             mapOf(
-                "totalActive" to stats.totalActive,
-                "totalInactive" to stats.totalInactive,
-                "avgPrice" to (stats.avgPrice ?: 0.0),
-                "totalStock" to (stats.totalStock ?: 0)
+                "total_active"   to s.totalActive,
+                "total_inactive" to s.totalInactive,
+                "avg_price"      to (s.avgPrice ?: 0.0),
+                "total_stock"    to (s.totalStock ?: 0),
+                "out_of_stock"   to s.outOfStock,
             )
-        } else {
-            error("Error ${response.code()}")
-        }
+        } else error("Error ${response.code()}")
     }
 }

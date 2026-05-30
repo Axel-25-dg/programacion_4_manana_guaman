@@ -1,4 +1,3 @@
-// data/remote/dto/PaginatedDto.kt
 package com.shopapp.data.remote.dto
 
 data class PaginatedDto<T>(
