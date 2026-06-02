@@ -1,3 +1,4 @@
+// data/remote/dto/CategoryDto.kt
 package com.shopapp.data.remote.dto
 
 import com.google.gson.annotations.SerializedName
@@ -22,9 +23,17 @@ data class CategoryRequestDto(
 )
 
 data class CategoryStatsDto(
-    val total:    Int,
-    val active:   Int,
+    val total: Int,
+    val active: Int,
     val inactive: Int,
+    val detail: List<CategoryDetailDto>
+)
+
+data class CategoryDetailDto(
+    val id: Int,
+    val name: String,
+    val num_products: Int,
+    val is_active: Boolean
 )
 
 // ── Mappers ───────────────────────────────────────────────────
