@@ -14,4 +14,5 @@ interface AuthRepository {
     suspend fun logout(): Result<Unit>
     suspend fun getStoredUser(): TokenDataStore.UserSnapshot?
     suspend fun isLoggedIn(): Boolean
+    suspend fun getProfile(): Result<LoggedUser>
 }

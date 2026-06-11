@@ -60,6 +60,18 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun isLoggedIn(): Boolean =
         !tokenDataStore.getAccessToken().isNullOrBlank()
 
+    override suspend fun getProfile(): Result<LoggedUser> = runCatching {
+        val response = api.getProfile()
+        if (response.isSuccessful) {
+            val dto = response.body()!!
+            // Actualizar en local opcionalmente
+            tokenDataStore.saveUser(dto.id, dto.username, dto.email, dto.isStaff)
+            LoggedUser(dto.id, dto.username, dto.email, dto.isStaff, dto.avatarUrl)
+        } else {
+            error("Error ${response.code()}")
+        }
+    }
+
     // Extrae el mensaje de error legible del JSON de Django
     private fun parseErrorMessage(body: String, code: Int): String {
         return try {

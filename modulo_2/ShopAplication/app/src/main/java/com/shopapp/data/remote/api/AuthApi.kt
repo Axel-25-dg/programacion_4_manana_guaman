@@ -2,9 +2,12 @@ package com.shopapp.data.remote.api
 import com.shopapp.data.remote.dto.*
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface AuthApi {
+    @GET("users/profile/")
+    suspend fun getProfile(): Response<UserDto>
     @POST("auth/login/")
     suspend fun login(@Body body: LoginRequest): Response<AuthResponseDto>
 
