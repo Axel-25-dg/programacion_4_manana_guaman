@@ -1,6 +1,7 @@
 // presentation/ui/admin/products/ProductFormSheet.kt
 package com.shopapp.presentation.ui.admin.products
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -21,11 +22,12 @@ import com.shopapp.theme.*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductFormSheet(
-    initial:    Product?,
-    categories: List<Category>,
-    formState:  ProductFormState,
-    onSave:     (ProductPayload) -> Unit,
-    onDismiss:  () -> Unit,
+    initial:        Product?,
+    categories:     List<Category>,
+    formState:      ProductFormState,
+    onSave:         (ProductPayload) -> Unit,
+    onDismiss:      () -> Unit,
+    onImageUpdated: () -> Unit = {},   // ← nuevo parámetro
 ) {
     val isEdit = initial != null
 
@@ -70,6 +72,20 @@ fun ProductFormSheet(
                 fontWeight = FontWeight.Bold,
                 color      = TextPrimary,
             )
+
+            // ── Imagen del producto (solo al editar) ─────────────────────────────────────
+            if (isEdit && initial != null) {
+                ProductImageSection(
+                    productId       = initial.id,
+                    currentImageUrl = initial.imageUrl,
+                    isStaff         = true,         // solo staff llega hasta aquí
+                    onImageUpdated  = onImageUpdated,
+                    modifier        = Modifier
+                        .fillMaxWidth()
+                        .height(220.dp),
+                )
+                Spacer(Modifier.height(8.dp))
+            }
 
             // Error global
             if (formState is ProductFormState.Error) {
@@ -226,10 +242,8 @@ fun ProductFormSheet(
                     enabled  = !isSaving,
                     modifier = Modifier.weight(1f).height(52.dp),
                     colors   = ButtonDefaults.outlinedButtonColors(contentColor = TextSecondary),
-                    border   = ButtonDefaults.outlinedButtonBorder.copy(
-                        brush = androidx.compose.ui.graphics.SolidColor(Border),
-                    ),
-                    shape = MaterialTheme.shapes.medium,
+                    border   = BorderStroke(1.dp, Border),
+                    shape    = MaterialTheme.shapes.medium,
                 ) { Text("Cancelar") }
 
                 Button(

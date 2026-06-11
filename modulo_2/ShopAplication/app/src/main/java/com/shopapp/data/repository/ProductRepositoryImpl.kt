@@ -1,19 +1,24 @@
 package com.shopapp.data.repository
 
+import android.content.Context
+import android.net.Uri
 import com.shopapp.data.remote.api.ProductApi
 import com.shopapp.data.remote.dto.RestockRequestDto
 import com.shopapp.data.remote.dto.toDomain
 import com.shopapp.data.remote.dto.toRequest
+import com.shopapp.data.util.toMultipart
 import com.shopapp.domain.model.Product
 import com.shopapp.domain.model.ProductFilters
 import com.shopapp.domain.model.ProductPayload
 import com.shopapp.domain.repository.ProductRepository
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class ProductRepositoryImpl @Inject constructor(
     private val api: ProductApi,
+    @ApplicationContext private val context: Context,
 ) : ProductRepository {
 
     override suspend fun getProducts(filters: ProductFilters): Result<Pair<List<Product>, Int>> =
@@ -79,4 +84,15 @@ class ProductRepositoryImpl @Inject constructor(
             )
         } else error("Error ${response.code()}")
     }
+
+    override suspend fun uploadProductImage(id: Int, uri: Uri): Result<String> =
+        runCatching {
+            val part     = uri.toMultipart(context, fieldName = "image")
+            val response = api.uploadProductImage(id, part)
+            if (response.isSuccessful) {
+                response.body()?.imageUrl ?: error("El servidor no devolvió una URL de imagen")
+            } else {
+                error(response.errorBody()?.string() ?: "Error ${response.code()}")
+            }
+        }
 }
