@@ -115,7 +115,28 @@ fun NavGraph(
                         }
                     },
                     onNavigateToRegister = { navController.navigate(Screen.Register.route) },
+                    onNavigateToForgotPassword = { navController.navigate(Screen.ForgotPassword.route) },
                     viewModel            = authViewModel,
+                )
+            }
+
+            // ── FORGOT PASSWORD ─────────────────────
+            composable(Screen.ForgotPassword.route) {
+                com.shopapp.presentation.ui.auth.ForgotPasswordScreen(
+                    onBack = { navController.popBackStack() },
+                    onGoToConfirm = { navController.navigate(Screen.ResetPasswordConfirm.route) }
+                )
+            }
+
+            // ── RESET PASSWORD CONFIRM ──────────────
+            composable(Screen.ResetPasswordConfirm.route) {
+                com.shopapp.presentation.ui.auth.ResetPasswordConfirmScreen(
+                    onBack = { navController.popBackStack() },
+                    onResetFinished = {
+                        navController.navigate(Screen.Login.route) {
+                            popUpTo(Screen.Login.route) { inclusive = true }
+                        }
+                    }
                 )
             }
 
@@ -387,7 +408,7 @@ fun NavGraph(
                 }
             }
 
-            // ── ADMIN USERS (CORREGIDO) ────────────
+            // ── ADMIN USERS ────────────────────────
             composable("admin/users") {
                 if (!isStaff) {
                     LaunchedEffect(Unit) {
@@ -416,7 +437,38 @@ fun NavGraph(
                     }
                 }
             }
+
+            // ── SEND NOTIFICATION (STAFF) ──────────
+            composable(Screen.SendNotification.route) {
+                if (!isStaff) {
+                    LaunchedEffect(Unit) {
+                        navController.navigate(Screen.Home.route) { popUpTo(0) }
+                    }
+                    return@composable
+                }
+
+                AdminScaffold(
+                    currentRoute = Screen.SendNotification.route,
+                    user         = currentUser,
+                    title        = "Enviar notificación",
+                    onNavClick   = { route ->
+                        navController.navigate(route) { launchSingleTop = true }
+                    },
+                    onStoreClick = { navController.navigate(Screen.Home.route) },
+                    onLogout     = {
+                        authViewModel.logout()
+                        navController.navigate(Screen.Login.route) {
+                            popUpTo(0) { inclusive = true }
+                        }
+                    },
+                ) { padding ->
+                    Box(modifier = Modifier.padding(padding)) {
+                        com.shopapp.presentation.ui.admin.users.SendNotificationScreen(
+                            onBack = { navController.popBackStack() }
+                        )
+                    }
+                }
+            }
         }
     }
 }
-
