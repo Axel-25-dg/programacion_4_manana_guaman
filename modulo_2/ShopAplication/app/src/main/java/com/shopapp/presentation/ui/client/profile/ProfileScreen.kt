@@ -12,8 +12,10 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CameraAlt
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.automirrored.filled.Logout
+import androidx.compose.material.icons.automirrored.filled.Send
+import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -35,9 +37,10 @@ import com.shopapp.theme.*
 
 @Composable
 fun ProfileScreen(
-    authViewModel: AuthViewModel,
-    onLogout:      () -> Unit,
-    viewModel:     ProfileViewModel = hiltViewModel(),
+    authViewModel:      AuthViewModel,
+    onLogout:           () -> Unit,
+    onSendNotification: () -> Unit = {},
+    viewModel:          ProfileViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsState()
     val user = state.profile
@@ -153,6 +156,37 @@ fun ProfileScreen(
                         if (i < 3) HorizontalDivider(color = BorderLight, thickness = 0.5.dp)
                     }
                 }
+            }
+
+            if (user?.isStaff == true) {
+                Spacer(Modifier.height(24.dp))
+                HorizontalDivider(color = BorderLight, thickness = 0.5.dp)
+
+                ListItem(
+                    headlineContent = {
+                        Text("Enviar notificación", fontWeight = FontWeight.Medium)
+                    },
+                    supportingContent = {
+                        Text("Envía un correo a uno o todos los usuarios")
+                    },
+                    leadingContent = {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.Send,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.primary,
+                        )
+                    },
+                    trailingContent = {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                            contentDescription = null,
+                        )
+                    },
+                    colors = ListItemDefaults.colors(containerColor = Surface),
+                    modifier = Modifier.clickable(onClick = onSendNotification),
+                )
+
+                HorizontalDivider(color = BorderLight, thickness = 0.5.dp)
             }
 
             Spacer(Modifier.height(24.dp))
