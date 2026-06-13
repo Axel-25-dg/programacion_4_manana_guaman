@@ -2,7 +2,7 @@ package com.shopapp.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.shopapp.domain.repository.PasswordResetRepository
+import com.shopapp.domain.repository.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -16,7 +16,7 @@ data class ResetPasswordConfirmUiState(
 
 @HiltViewModel
 class ResetPasswordConfirmViewModel @Inject constructor(
-    private val repository: PasswordResetRepository,
+    private val repository: AuthRepository,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(ResetPasswordConfirmUiState())
