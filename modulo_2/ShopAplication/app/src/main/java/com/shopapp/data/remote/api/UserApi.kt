@@ -47,4 +47,39 @@ interface UserApi {
 
     @GET("users/stats/")
     suspend fun getStats(): Response<UserStatsDto>
+
+    // ── Recuperación de contraseña ───────────────────────────────────────────
+
+    /**
+     * Solicita el reset de contraseña.
+     * El backend siempre responde 200 (anti-enumeración de usuarios).
+     * No requiere autenticación.
+     * Backend: POST /api/auth/password-reset/
+     */
+    @POST("auth/password-reset/")
+    suspend fun requestPasswordReset(
+        @Body body: PasswordResetRequestDto,
+    ): Response<MessageDto>
+
+    /**
+     * Confirma el reset con uid + token + nueva contraseña.
+     * Devuelve 400 si el token es inválido, expirado o las contraseñas no coinciden.
+     * Backend: POST /api/auth/password-reset/confirm/
+     */
+    @POST("auth/password-reset/confirm/")
+    suspend fun confirmPasswordReset(
+        @Body body: PasswordResetConfirmDto,
+    ): Response<MessageDto>
+
+    // ── Notificaciones de staff ───────────────────────────────────────────────
+
+    /**
+     * Envía un correo personalizado o masivo.
+     * Requiere is_staff = true en el backend (IsAdminUser → 403 si no es staff).
+     * Backend: POST /api/emails/send/
+     */
+    @POST("emails/send/")
+    suspend fun sendNotification(
+        @Body body: SendNotificationDto,
+    ): Response<NotificationResultDto>
 }
