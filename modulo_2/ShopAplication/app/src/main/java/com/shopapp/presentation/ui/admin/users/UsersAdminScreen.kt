@@ -27,6 +27,7 @@ import com.shopapp.theme.*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UsersAdminScreen(
+    onSendNotification: () -> Unit = {},
     viewModel: UsersAdminViewModel = hiltViewModel(),
 ) {
     val state     by viewModel.state.collectAsState()
@@ -66,6 +67,9 @@ fun UsersAdminScreen(
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         IconButton(onClick = viewModel::load) {
                             Icon(Icons.Default.Refresh, null, tint = TextSecondary)
+                        }
+                        IconButton(onClick = onSendNotification) {
+                            Icon(Icons.Default.Email, "Enviar notificaciones", tint = Accent)
                         }
                         Button(
                             onClick = { editTarget = null; showForm = true },

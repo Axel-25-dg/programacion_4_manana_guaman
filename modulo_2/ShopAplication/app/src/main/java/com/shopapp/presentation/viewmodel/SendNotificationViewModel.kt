@@ -3,7 +3,7 @@ package com.shopapp.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shopapp.domain.model.NotificationResult
-import com.shopapp.domain.repository.NotificationRepository
+import com.shopapp.domain.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -17,7 +17,7 @@ data class SendNotificationUiState(
 
 @HiltViewModel
 class SendNotificationViewModel @Inject constructor(
-    private val repository: NotificationRepository,
+    private val repository: UserRepository,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(SendNotificationUiState())

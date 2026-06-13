@@ -435,7 +435,9 @@ fun NavGraph(
                     },
                 ) { padding ->
                     Box(modifier = Modifier.padding(padding)) {
-                        UsersAdminScreen()
+                        UsersAdminScreen(
+                            onSendNotification = { navController.navigate(Screen.SendNotification.route) }
+                        )
                     }
                 }
             }
