@@ -20,12 +20,12 @@ void main() {
 
   String descripcionNivel = switch (nivelIdioma) {
     'A1' => 'Nivel de entrada: frases basicas',
-    'A2' => 'Nivel elemental: comunicacion simple',
+    'A2' => 'Nivel elemental: comunicación simple',
     'B1' => 'Nivel intermedio: situaciones cotidianas',
     'B2' => 'Nivel intermedio alto: argumentos complejos',
     'C1' => 'Nivel avanzado: uso flexible y efectivo',
-    'C2' => 'Nivel de maestria: comprension total',
-    _    => 'Descripcion no disponible',
+    'C2' => 'Nivel de maestria: comprensión total',
+    _    => 'Descripción no disponible',
   };
   
   print(descripcionNivel);
@@ -39,10 +39,10 @@ void main() {
     _ => 'Sin racha activa',
   };
 
-  print('Categoria de racha: $categoriaRacha');
+  print('Categoría de racha: $categoriaRacha');
 
   double precision = 92.5;
-  String alertaDesempeño = switch (precision) {
+  String alertaDesempeno = switch (precision) {
     double p when p >= 95.0 => '🏆 EXCELENTE — Sigue asi',
     double p when p >= 85.0 => '🥈 MUY BUENO — Casi perfecto',
     double p when p >= 70.0 => '🥉 BUENO — Sigue practicando',
@@ -50,7 +50,7 @@ void main() {
     _                       => '❌ INSUFICIENTE — Refuerzo urgente',
   };
 
-  print(alertaDesempeño);
+  print(alertaDesempeno);
   
   Object perfil = {'id': 101, 'nombre': 'Henry', 'idioma': 'Japones'};
 
@@ -64,7 +64,7 @@ void main() {
     String texto =>
         'Mensaje: $texto',
     _ =>
-        'Informacion no disponible',
+        'Información no disponible',
   };
 
   print(infoPerfil);

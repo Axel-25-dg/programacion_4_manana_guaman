@@ -60,6 +60,18 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun isLoggedIn(): Boolean =
         !tokenDataStore.getAccessToken().isNullOrBlank()
 
+    override suspend fun getProfile(): Result<LoggedUser> = runCatching {
+        val response = api.getProfile()
+        if (response.isSuccessful) {
+            val dto = response.body()!!
+            // Actualizar en local opcionalmente
+            tokenDataStore.saveUser(dto.id, dto.username, dto.email, dto.isStaff)
+            LoggedUser(dto.id, dto.username, dto.email, dto.isStaff, dto.avatarUrl)
+        } else {
+            error("Error ${response.code()}")
+        }
+    }
+
     // Extrae el mensaje de error legible del JSON de Django
     private fun parseErrorMessage(body: String, code: Int): String {
         return try {
@@ -73,4 +85,40 @@ class AuthRepositoryImpl @Inject constructor(
             "Error $code"
         }
     }
+
+    // ── Recuperación de contraseña ───────────────────────────────────────────
+
+    override suspend fun requestReset(email: String): Result<String> =
+        runCatching {
+            val response = api.requestPasswordReset(
+                com.shopapp.data.remote.dto.PasswordResetRequestDto(email)
+            )
+            if (response.isSuccessful) {
+                response.body()?.detail ?: "Solicitud enviada"
+            } else {
+                error(response.errorBody()?.string() ?: "Error ${response.code()}")
+            }
+        }
+
+    override suspend fun confirmReset(
+        uid:          String,
+        token:        String,
+        newPassword:  String,
+        newPassword2: String,
+    ): Result<String> =
+        runCatching {
+            val response = api.confirmPasswordReset(
+                com.shopapp.data.remote.dto.PasswordResetConfirmDto(
+                    uid          = uid,
+                    token        = token,
+                    newPassword  = newPassword,
+                    newPassword2 = newPassword2,
+                )
+            )
+            if (response.isSuccessful) {
+                response.body()?.detail ?: "Contraseña actualizada"
+            } else {
+                error(response.errorBody()?.string() ?: "Error ${response.code()}")
+            }
+        }
 }

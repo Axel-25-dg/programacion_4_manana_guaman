@@ -15,7 +15,6 @@ import javax.inject.Inject
 @HiltViewModel
 class AuthViewModel @Inject constructor(
     private val authRepository: AuthRepository,
-    private val tokenDataStore: TokenDataStore,
 ) : ViewModel() {
 
     // ── Estado de la UI ───────────────────────────────────────
@@ -28,11 +27,19 @@ class AuthViewModel @Inject constructor(
 
     val isAuthenticated: StateFlow<Boolean> = _currentUser
         .map { it != null }
-        .stateIn(viewModelScope, SharingStarted.Eagerly, false)
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Eagerly,
+            initialValue = false
+        )
 
     val isStaff: StateFlow<Boolean> = _currentUser
         .map { it?.isStaff == true }
-        .stateIn(viewModelScope, SharingStarted.Eagerly, false)
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Eagerly,
+            initialValue = false
+        )
 
     // ── Estado de carga inicial ───────────────────────────────
     private val _isCheckingSession = MutableStateFlow(true)
@@ -49,11 +56,13 @@ class AuthViewModel @Inject constructor(
                 val snapshot = authRepository.getStoredUser()
                 if (snapshot != null && authRepository.isLoggedIn()) {
                     _currentUser.value = LoggedUser(
-                        id       = snapshot.id,
-                        username = snapshot.username,
-                        email    = snapshot.email,
-                        isStaff  = snapshot.isStaff,
+                        id        = snapshot.id,
+                        username  = snapshot.username,
+                        email     = snapshot.email,
+                        isStaff   = snapshot.isStaff,
+                        avatarUrl = null,
                     )
+                    refreshProfile()
                 }
             } finally {
                 _isCheckingSession.value = false
@@ -105,6 +114,14 @@ class AuthViewModel @Inject constructor(
     fun clearError() {
         if (_uiState.value is AuthUiState.Error) {
             _uiState.value = AuthUiState.Idle
+        }
+    }
+
+    fun refreshProfile() {
+        viewModelScope.launch {
+            authRepository.getProfile().onSuccess { user ->
+                _currentUser.value = user
+            }
         }
     }
 }

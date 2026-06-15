@@ -10,4 +10,5 @@ data class LoggedUser(
     val username: String,
     val email: String,
     val isStaff: Boolean,
+    val avatarUrl: String? = null,
 )

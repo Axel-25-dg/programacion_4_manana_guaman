@@ -17,4 +17,6 @@ abstract class RepositoryModule {
     @Binds @Singleton abstract fun bindProductRepository (impl: ProductRepositoryImpl ): ProductRepository
     @Binds @Singleton abstract fun bindOrderRepository   (impl: OrderRepositoryImpl   ): OrderRepository
     @Binds @Singleton abstract fun bindUserRepository    (impl: UserRepositoryImpl    ): UserRepository
+    @Binds @Singleton abstract fun bindPasswordResetRepository(impl: PasswordResetRepositoryImpl): PasswordResetRepository
+    @Binds @Singleton abstract fun bindNotificationRepository(impl: NotificationRepositoryImpl): NotificationRepository
 }

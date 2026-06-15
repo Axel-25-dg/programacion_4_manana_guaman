@@ -198,6 +198,7 @@ fun ProductsAdminScreen(
                 editTarget = null
                 viewModel.resetFormState()
             },
+            onImageUpdated = { viewModel.load() },   // ← nuevo
         )
     }
 
