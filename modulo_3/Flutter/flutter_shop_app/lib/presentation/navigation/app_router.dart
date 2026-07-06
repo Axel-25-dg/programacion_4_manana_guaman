@@ -14,6 +14,8 @@ import '../screens/catalog/product_detail_screen.dart';
 import '../screens/cart/cart_screen.dart';
 import '../screens/orders/orders_screen.dart';
 import '../screens/orders/order_detail_screen.dart';
+import '../screens/admin/dashboard_screen.dart';
+import '../widgets/admin_shell.dart';
 import 'public_shell.dart';
 
 class _SplashScreen extends StatelessWidget {
@@ -124,27 +126,51 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: '/admin',
-        builder: (_, __) => const _PlaceholderScreen('Dashboard — M8'),
+        builder: (_, state) => AdminShell(
+          title: 'Dashboard',
+          currentRoute: state.matchedLocation,
+          child: const DashboardScreen(),
+        ),
       ),
       GoRoute(
         path: '/admin/categories',
-        builder: (_, __) => const _PlaceholderScreen('Categorías — M9'),
+        builder: (_, state) => AdminShell(
+          title: 'Categorías',
+          currentRoute: state.matchedLocation,
+          child: const _PlaceholderScreen('Categorías — M8'),
+        ),
       ),
       GoRoute(
         path: '/admin/products',
-        builder: (_, __) => const _PlaceholderScreen('Productos — M10'),
+        builder: (_, state) => AdminShell(
+          title: 'Productos',
+          currentRoute: state.matchedLocation,
+          child: const _PlaceholderScreen('Productos — M9'),
+        ),
       ),
       GoRoute(
         path: '/admin/orders',
-        builder: (_, __) => const _PlaceholderScreen('Pedidos admin — M11'),
+        builder: (_, state) => AdminShell(
+          title: 'Pedidos',
+          currentRoute: state.matchedLocation,
+          child: const _PlaceholderScreen('Pedidos admin — M10'),
+        ),
       ),
       GoRoute(
         path: '/admin/orders/:id',
-        builder: (_, state) => _PlaceholderScreen('Pedido admin #${state.pathParameters['id']} — M11'),
+        builder: (_, state) => AdminShell(
+          title: 'Detalle pedido',
+          currentRoute: '/admin/orders',
+          child: _PlaceholderScreen('Pedido admin #${state.pathParameters['id']} — M10'),
+        ),
       ),
       GoRoute(
         path: '/admin/users',
-        builder: (_, __) => const _PlaceholderScreen('Usuarios — M12'),
+        builder: (_, state) => AdminShell(
+          title: 'Usuarios',
+          currentRoute: state.matchedLocation,
+          child: const _PlaceholderScreen('Usuarios — M11'),
+        ),
       ),
     ],
   );

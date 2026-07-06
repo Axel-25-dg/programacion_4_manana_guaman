@@ -18,6 +18,8 @@ abstract class ProductRemoteDatasource {
     int pageSize = 12,
   });
 
+  Future<Map<String, dynamic>> getStats();
+
   Future<Product> getProduct(int id);
 }
 
@@ -52,6 +54,16 @@ class ProductRemoteDatasourceImpl implements ProductRemoteDatasource {
         },
       );
       return PaginatedProducts.fromJson(response.data as Map<String, dynamic>);
+    } on DioException catch (e) {
+      throw ApiException.fromDioError(e);
+    }
+  }
+
+  @override
+  Future<Map<String, dynamic>> getStats() async {
+    try {
+      final response = await _dio.get('/products/stats/');
+      return response.data as Map<String, dynamic>;
     } on DioException catch (e) {
       throw ApiException.fromDioError(e);
     }
