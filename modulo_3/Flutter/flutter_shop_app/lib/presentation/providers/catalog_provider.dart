@@ -1,7 +1,6 @@
 // lib/presentation/providers/catalog_provider.dart
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../data/remote/api/category_remote_datasource.dart';
 import '../../data/remote/api/product_remote_datasource.dart';
 import '../../data/repository/category_repository_impl.dart';
 import '../../domain/model/category.dart';
@@ -21,6 +20,8 @@ class CatalogState {
   final String search;
   final int? selectedCategory;
   final String ordering;
+  final double? minPrice;
+  final double? maxPrice;
   final int page;
 
   const CatalogState({
@@ -33,6 +34,8 @@ class CatalogState {
     this.search = '',
     this.selectedCategory,
     this.ordering = '',
+    this.minPrice,
+    this.maxPrice,
     this.page = 1,
   });
 
@@ -47,6 +50,9 @@ class CatalogState {
     int? selectedCategory,
     bool clearCategory = false,
     String? ordering,
+    double? minPrice,
+    double? maxPrice,
+    bool clearFilters = false,
     int? page,
   }) => CatalogState(
         products: products ?? this.products,
@@ -55,9 +61,13 @@ class CatalogState {
         error: error,
         total: total ?? this.total,
         hasMore: hasMore ?? this.hasMore,
-        search: search ?? this.search,
-        selectedCategory: clearCategory ? null : (selectedCategory ?? this.selectedCategory),
-        ordering: ordering ?? this.ordering,
+        search: clearFilters ? '' : (search ?? this.search),
+        selectedCategory: clearFilters
+            ? null
+            : (clearCategory ? null : (selectedCategory ?? this.selectedCategory)),
+        ordering: clearFilters ? '' : (ordering ?? this.ordering),
+        minPrice: clearFilters ? null : (minPrice ?? this.minPrice),
+        maxPrice: clearFilters ? null : (maxPrice ?? this.maxPrice),
         page: page ?? this.page,
       );
 }
@@ -84,6 +94,8 @@ class CatalogNotifier extends StateNotifier<CatalogState> {
         search: s.search.isEmpty ? null : s.search,
         category: s.selectedCategory,
         ordering: s.ordering.isEmpty ? null : s.ordering,
+        minPrice: s.minPrice,
+        maxPrice: s.maxPrice,
         isActive: true,
         page: page,
         pageSize: 12,
@@ -120,6 +132,16 @@ class CatalogNotifier extends StateNotifier<CatalogState> {
 
   void setOrdering(String ordering) {
     state = state.copyWith(ordering: ordering);
+    load();
+  }
+
+  void setPriceRange({double? minPrice, double? maxPrice}) {
+    state = state.copyWith(minPrice: minPrice, maxPrice: maxPrice);
+    load();
+  }
+
+  void clearFilters() {
+    state = state.copyWith(clearFilters: true);
     load();
   }
 

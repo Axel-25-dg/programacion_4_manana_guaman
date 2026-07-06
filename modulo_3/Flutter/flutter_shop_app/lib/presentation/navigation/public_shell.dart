@@ -16,7 +16,7 @@ class PublicShell extends ConsumerWidget {
     final cartCount = ref.watch(cartProvider).totalItems;
     final location = GoRouterState.of(context).matchedLocation;
 
-    int _selectedIndex() {
+    int selectedIndex() {
       if (location.startsWith('/catalog')) return 1;
       if (location.startsWith('/orders')) return 2;
       if (location.startsWith('/cart')) return 3;
@@ -27,7 +27,7 @@ class PublicShell extends ConsumerWidget {
     return Scaffold(
       body: child,
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex(),
+        currentIndex: selectedIndex(),
         type: BottomNavigationBarType.fixed,
         items: [
           const BottomNavigationBarItem(

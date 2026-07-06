@@ -9,6 +9,8 @@ import '../screens/auth/login_screen.dart';
 import '../screens/auth/register_screen.dart';
 import '../screens/catalog/catalog_screen.dart';
 import '../screens/catalog/home_screen.dart';
+import '../screens/catalog/product_detail_screen.dart';
+import '../screens/cart/cart_screen.dart';
 import 'public_shell.dart';
 
 class _SplashScreen extends StatelessWidget {
@@ -96,12 +98,8 @@ final routerProvider = Provider<GoRouter>((ref) {
             builder: (_, __) => const CatalogScreen(),
           ),
           GoRoute(
-            path: '/product/:id',
-            builder: (_, state) => _PlaceholderScreen('Detalle #${state.pathParameters['id']} — M5'),
-          ),
-          GoRoute(
             path: '/cart',
-            builder: (_, __) => const _PlaceholderScreen('Carrito — M5'),
+            builder: (_, __) => const CartScreen(),
           ),
           GoRoute(
             path: '/orders',
@@ -116,6 +114,10 @@ final routerProvider = Provider<GoRouter>((ref) {
             builder: (_, __) => const _PlaceholderScreen('Perfil — M6'),
           ),
         ],
+      ),
+      GoRoute(
+        path: '/catalog/:id',
+        builder: (_, state) => ProductDetailScreen(productId: int.parse(state.pathParameters['id']!)),
       ),
       GoRoute(
         path: '/admin',

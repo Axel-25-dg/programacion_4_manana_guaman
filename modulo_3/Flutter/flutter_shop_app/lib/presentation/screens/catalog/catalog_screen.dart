@@ -1,11 +1,14 @@
 // lib/presentation/screens/catalog/catalog_screen.dart
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../theme/app_colors.dart';
 import '../../providers/catalog_provider.dart';
 import '../../widgets/product_card.dart';
+import 'catalog_filter_sheet.dart';
 
 class CatalogScreen extends ConsumerStatefulWidget {
   const CatalogScreen({super.key});
@@ -26,15 +29,25 @@ class _CatalogScreenState extends ConsumerState<CatalogScreen> {
 
   @override
   void dispose() {
+    _debounce?.cancel();
     _searchCtrl.dispose();
     _scrollCtrl.dispose();
     super.dispose();
   }
 
+  Timer? _debounce;
+
   void _onScroll() {
     if (_scrollCtrl.position.pixels >= _scrollCtrl.position.maxScrollExtent - 200) {
       ref.read(catalogProvider.notifier).loadMore();
     }
+  }
+
+  void _onSearchChanged(String query) {
+    _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 500), () {
+      ref.read(catalogProvider.notifier).setSearch(query.trim());
+    });
   }
 
   @override
@@ -66,9 +79,7 @@ class _CatalogScreenState extends ConsumerState<CatalogScreen> {
                   const SizedBox(height: 12),
                   TextField(
                     controller: _searchCtrl,
-                    onChanged: (q) {
-                      ref.read(catalogProvider.notifier).setSearch(q);
-                    },
+                    onChanged: _onSearchChanged,
                     decoration: const InputDecoration(
                       hintText: 'Buscar productos...',
                       prefixIcon: Icon(Icons.search_rounded, color: AppColors.textSecondary),
@@ -77,29 +88,73 @@ class _CatalogScreenState extends ConsumerState<CatalogScreen> {
                     style: const TextStyle(color: AppColors.textPrimary),
                   ),
                   const SizedBox(height: 10),
-                  SizedBox(
-                    height: 34,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: [
-                        for (final item in [
-                          ('', 'Relevancia'),
-                          ('price', 'Precio ↑'),
-                          ('-price', 'Precio ↓'),
-                          ('-created_at', 'Recientes'),
-                        ])
-                          Padding(
-                            padding: const EdgeInsets.only(right: 8),
-                            child: ChoiceChip(
-                              label: Text(item.$2),
-                              selected: state.ordering == item.$1,
-                              onSelected: (_) => ref.read(catalogProvider.notifier).setOrdering(item.$1),
-                            ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: SizedBox(
+                          height: 34,
+                          child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            children: [
+                              for (final item in [
+                                ('', 'Relevancia'),
+                                ('price', 'Precio ↑'),
+                                ('-price', 'Precio ↓'),
+                                ('-created_at', 'Recientes'),
+                              ])
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 8),
+                                  child: ChoiceChip(
+                                    label: Text(item.$2),
+                                    selected: state.ordering == item.$1,
+                                    onSelected: (_) => ref.read(catalogProvider.notifier).setOrdering(item.$1),
+                                  ),
+                                ),
+                            ],
                           ),
-                      ],
-                    ),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      IconButton(
+                        onPressed: () {
+                          showModalBottomSheet<void>(
+                            context: context,
+                            isScrollControlled: true,
+                            backgroundColor: Colors.transparent,
+                            builder: (_) => CatalogFilterSheet(
+                              minPrice: state.minPrice,
+                              maxPrice: state.maxPrice,
+                              onApply: (min, max) => ref.read(catalogProvider.notifier).setPriceRange(minPrice: min, maxPrice: max),
+                              onClear: () => ref.read(catalogProvider.notifier).clearFilters(),
+                            ),
+                          );
+                        },
+                        icon: const Icon(Icons.filter_list_rounded),
+                        color: AppColors.accent,
+                        tooltip: 'Filtrar',
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 8),
+                  if (state.minPrice != null || state.maxPrice != null)
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 8),
+                      child: Wrap(
+                        spacing: 8,
+                        children: [
+                          if (state.minPrice != null)
+                            InputChip(
+                              label: Text('Desde ${state.minPrice!.toStringAsFixed(0)}'),
+                              onDeleted: () => ref.read(catalogProvider.notifier).setPriceRange(minPrice: null, maxPrice: state.maxPrice),
+                            ),
+                          if (state.maxPrice != null)
+                            InputChip(
+                              label: Text('Hasta ${state.maxPrice!.toStringAsFixed(0)}'),
+                              onDeleted: () => ref.read(catalogProvider.notifier).setPriceRange(minPrice: state.minPrice, maxPrice: null),
+                            ),
+                        ],
+                      ),
+                    ),
                   catsAsync.when(
                     loading: () => const SizedBox.shrink(),
                     error: (_, __) => const SizedBox.shrink(),
