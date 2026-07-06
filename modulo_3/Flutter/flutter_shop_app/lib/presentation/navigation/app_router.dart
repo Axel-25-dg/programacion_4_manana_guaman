@@ -7,6 +7,9 @@ import '../../domain/model/auth_state.dart';
 import '../providers/auth_provider.dart';
 import '../screens/auth/login_screen.dart';
 import '../screens/auth/register_screen.dart';
+import '../screens/catalog/catalog_screen.dart';
+import '../screens/catalog/home_screen.dart';
+import 'public_shell.dart';
 
 class _SplashScreen extends StatelessWidget {
   const _SplashScreen();
@@ -81,29 +84,62 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/register',
         builder: (_, __) => const RegisterScreen(),
       ),
-      GoRoute(
-        path: '/',
-        builder: (_, __) => const _PlaceholderScreen('Home — M5'),
-      ),
-      GoRoute(
-        path: '/catalog',
-        builder: (_, __) => const _PlaceholderScreen('Catálogo — M5'),
-      ),
-      GoRoute(
-        path: '/product/:id',
-        builder: (_, __) => const _PlaceholderScreen('Detalle — M5'),
-      ),
-      GoRoute(
-        path: '/orders',
-        builder: (_, __) => const _PlaceholderScreen('Mis pedidos — M7'),
-      ),
-      GoRoute(
-        path: '/profile',
-        builder: (_, __) => const _PlaceholderScreen('Perfil — M7'),
+      ShellRoute(
+        builder: (_, __, child) => PublicShell(child: child),
+        routes: [
+          GoRoute(
+            path: '/',
+            builder: (_, __) => const HomeScreen(),
+          ),
+          GoRoute(
+            path: '/catalog',
+            builder: (_, __) => const CatalogScreen(),
+          ),
+          GoRoute(
+            path: '/product/:id',
+            builder: (_, state) => _PlaceholderScreen('Detalle #${state.pathParameters['id']} — M5'),
+          ),
+          GoRoute(
+            path: '/cart',
+            builder: (_, __) => const _PlaceholderScreen('Carrito — M5'),
+          ),
+          GoRoute(
+            path: '/orders',
+            builder: (_, __) => const _PlaceholderScreen('Mis pedidos — M6'),
+          ),
+          GoRoute(
+            path: '/orders/:id',
+            builder: (_, state) => _PlaceholderScreen('Pedido #${state.pathParameters['id']} — M6'),
+          ),
+          GoRoute(
+            path: '/profile',
+            builder: (_, __) => const _PlaceholderScreen('Perfil — M6'),
+          ),
+        ],
       ),
       GoRoute(
         path: '/admin',
         builder: (_, __) => const _PlaceholderScreen('Dashboard — M8'),
+      ),
+      GoRoute(
+        path: '/admin/categories',
+        builder: (_, __) => const _PlaceholderScreen('Categorías — M9'),
+      ),
+      GoRoute(
+        path: '/admin/products',
+        builder: (_, __) => const _PlaceholderScreen('Productos — M10'),
+      ),
+      GoRoute(
+        path: '/admin/orders',
+        builder: (_, __) => const _PlaceholderScreen('Pedidos admin — M11'),
+      ),
+      GoRoute(
+        path: '/admin/orders/:id',
+        builder: (_, state) => _PlaceholderScreen('Pedido admin #${state.pathParameters['id']} — M11'),
+      ),
+      GoRoute(
+        path: '/admin/users',
+        builder: (_, __) => const _PlaceholderScreen('Usuarios — M12'),
       ),
     ],
   );
