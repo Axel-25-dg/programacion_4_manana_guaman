@@ -1,48 +1,32 @@
+// lib/data/remote/api/category_remote_datasource.dart
+
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../../../core/error/api_exception.dart';
-import '../../../domain/model/category.dart';
 import 'dio_client.dart';
+import '../../../domain/model/category.dart';
 
 abstract class CategoryRemoteDatasource {
   Future<List<Category>> getCategories();
-  Future<Category> getCategory(int id);
-  Future<Category> createCategory(Map<String, dynamic> payload);
-  Future<Category> updateCategory(int id, Map<String, dynamic> payload);
-  Future<void> deleteCategory(int id);
+  Future<Category>       getCategory(int id);
+  Future<Category>       createCategory(Map<String, dynamic> payload);
+  Future<Category>       updateCategory(int id, Map<String, dynamic> payload);
+  Future<void>           deleteCategory(int id);
   Future<Map<String, dynamic>> getStats();
 }
 
 class CategoryRemoteDatasourceImpl implements CategoryRemoteDatasource {
   final Dio _dio;
-
   CategoryRemoteDatasourceImpl(this._dio);
 
   @override
   Future<List<Category>> getCategories() async {
     try {
-      final response = await _dio.get('/categories/');
-      final data = response.data;
-
-      if (data is Map<String, dynamic>) {
-        final results = data['results'];
-        if (results is List) {
-          return results
-              .whereType<Map<String, dynamic>>()
-              .map(Category.fromJson)
-              .toList();
-        }
-      }
-
-      if (data is List) {
-        return data
-            .whereType<Map<String, dynamic>>()
-            .map(Category.fromJson)
-            .toList();
-      }
-
-      throw ApiException('Respuesta inesperada del servidor al listar categorías.');
+      final res = await _dio.get('/categories/');
+      final data = res.data as Map<String, dynamic>;
+      return (data['results'] as List)
+          .map((e) => Category.fromJson(e as Map<String, dynamic>))
+          .toList();
     } on DioException catch (e) {
       throw ApiException.fromDioError(e);
     }
