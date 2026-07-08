@@ -1,7 +1,10 @@
+// lib/presentation/providers/orders_provider.dart
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/remote/api/order_remote_datasource.dart';
 import '../../domain/model/order.dart';
 
+// ── Estado del historial ──────────────────────────────────────
 class OrdersState {
   final List<Order> orders;
   final bool isLoading;
@@ -33,15 +36,15 @@ class OrdersState {
     String? statusFilter,
     int? page,
   }) => OrdersState(
-        orders: orders ?? this.orders,
-        isLoading: isLoading ?? this.isLoading,
-        isLoadingMore: isLoadingMore ?? this.isLoadingMore,
-        error: error,
-        total: total ?? this.total,
-        hasMore: hasMore ?? this.hasMore,
-        statusFilter: statusFilter ?? this.statusFilter,
-        page: page ?? this.page,
-      );
+    orders: orders ?? this.orders,
+    isLoading: isLoading ?? this.isLoading,
+    isLoadingMore: isLoadingMore ?? this.isLoadingMore,
+    error: error,
+    total: total ?? this.total,
+    hasMore: hasMore ?? this.hasMore,
+    statusFilter: statusFilter ?? this.statusFilter,
+    page: page ?? this.page,
+  );
 }
 
 class OrdersNotifier extends StateNotifier<OrdersState> {
@@ -94,10 +97,12 @@ class OrdersNotifier extends StateNotifier<OrdersState> {
   void refresh() => load();
 }
 
-final ordersProvider = StateNotifierProvider<OrdersNotifier, OrdersState>((ref) {
+final ordersProvider =
+    StateNotifierProvider<OrdersNotifier, OrdersState>((ref) {
   return OrdersNotifier(ref.watch(orderDatasourceProvider));
 });
 
+// Provider de un pedido individual
 final orderDetailProvider = FutureProvider.family<Order, int>((ref, id) {
   return ref.watch(orderDatasourceProvider).getOrder(id);
 });

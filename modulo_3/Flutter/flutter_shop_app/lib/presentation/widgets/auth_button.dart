@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import '../../theme/app_colors.dart';
 
 class AuthButton extends StatelessWidget {
-  final String label;
+  final String   label;
   final VoidCallback? onPressed;
-  final bool isLoading;
+  final bool     isLoading;
 
   const AuthButton({
     super.key,
@@ -18,17 +18,17 @@ class AuthButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: double.infinity,
+      width:  double.infinity,
       height: 52,
       child: ElevatedButton(
         onPressed: isLoading ? null : onPressed,
-        child: isLoading
+        child:     isLoading
             ? const SizedBox(
-                width: 20,
+                width:  20,
                 height: 20,
-                child: CircularProgressIndicator(
+                child:  CircularProgressIndicator(
                   strokeWidth: 2.5,
-                  color: AppColors.onAccent,
+                  color:       AppColors.onAccent,
                 ),
               )
             : Text(label),

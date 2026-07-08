@@ -1,3 +1,5 @@
+// lib/presentation/providers/dashboard_provider.dart
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/remote/api/category_remote_datasource.dart';
 import '../../data/remote/api/product_remote_datasource.dart';
@@ -72,6 +74,7 @@ class DashboardNotifier extends StateNotifier<DashboardState> {
   Future<void> load() async {
     state = const DashboardLoading();
     try {
+      // All calls in parallel with Future.wait
       final results = await Future.wait([
         _prodDs.getStats(),
         _catDs.getStats(),
@@ -119,7 +122,8 @@ class DashboardNotifier extends StateNotifier<DashboardState> {
   }
 }
 
-final dashboardProvider = StateNotifierProvider<DashboardNotifier, DashboardState>((ref) {
+final dashboardProvider =
+    StateNotifierProvider<DashboardNotifier, DashboardState>((ref) {
   return DashboardNotifier(
     ref.watch(categoryDatasourceProvider),
     ref.watch(productDatasourceProvider),

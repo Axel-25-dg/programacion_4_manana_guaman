@@ -1,20 +1,21 @@
 // lib/presentation/providers/auth_provider.dart
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_shop_app/data/remote/api/authremotedatasource.dart';
 import '../../core/error/api_exception.dart';
 import '../../data/local/secure_storage.dart';
-import '../../data/remote/api/auth_remote_datasource.dart';
 import '../../domain/model/auth_models.dart';
 import '../../domain/model/auth_state.dart';
 
 class AuthNotifier extends StateNotifier<AuthState> {
   final AuthRemoteDatasource _datasource;
-  final SecureStorage _storage;
+  final SecureStorage        _storage;
 
   AuthNotifier(this._datasource, this._storage) : super(const AuthState.checking()) {
     _restoreSession();
   }
 
+  // Restaurar sesión al iniciar la app
   Future<void> _restoreSession() async {
     try {
       final isLoggedIn = await _storage.isLoggedIn();
@@ -28,10 +29,10 @@ class AuthNotifier extends StateNotifier<AuthState> {
         return;
       }
       final user = LoggedUser(
-        id: int.parse(userData['id']!),
+        id:       int.parse(userData['id']!),
         username: userData['username']!,
-        email: userData['email']!,
-        isStaff: userData['is_staff'] == 'true',
+        email:    userData['email']!,
+        isStaff:  userData['is_staff'] == 'true',
       );
       state = AuthState.authenticated(user);
     } catch (_) {
@@ -39,6 +40,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     }
   }
 
+  // Login
   Future<void> login(String username, String password) async {
     state = const AuthState.checking();
     try {
@@ -46,11 +48,12 @@ class AuthNotifier extends StateNotifier<AuthState> {
       state = AuthState.authenticated(user);
     } on ApiException catch (e) {
       state = AuthState.unauthenticated(e.message);
-    } catch (_) {
+    } catch (e) {
       state = const AuthState.unauthenticated('Error inesperado. Intenta de nuevo.');
     }
   }
 
+  // Registro
   Future<void> register(
     String username,
     String email,
@@ -60,19 +63,17 @@ class AuthNotifier extends StateNotifier<AuthState> {
     state = const AuthState.checking();
     try {
       final user = await _datasource.register(
-        username.trim(),
-        email.trim(),
-        password,
-        password2,
+        username.trim(), email.trim(), password, password2,
       );
       state = AuthState.authenticated(user);
     } on ApiException catch (e) {
       state = AuthState.unauthenticated(e.message);
-    } catch (_) {
+    } catch (e) {
       state = const AuthState.unauthenticated('Error inesperado. Intenta de nuevo.');
     }
   }
 
+  // Logout
   Future<void> logout() async {
     await _datasource.logout();
     state = const AuthState.unauthenticated();

@@ -7,7 +7,7 @@ enum AuthStatus { checking, authenticated, unauthenticated }
 class AuthState {
   final AuthStatus status;
   final LoggedUser? user;
-  final String? error;
+  final String?     error;
 
   const AuthState({
     required this.status,
@@ -17,25 +17,25 @@ class AuthState {
 
   const AuthState.checking()
       : status = AuthStatus.checking,
-        user = null,
-        error = null;
+        user   = null,
+        error  = null;
 
   const AuthState.authenticated(this.user)
       : status = AuthStatus.authenticated,
-        error = null;
+        error  = null;
 
   const AuthState.unauthenticated([this.error])
       : status = AuthStatus.unauthenticated,
-        user = null;
+        user   = null;
 
-  bool get isAuthenticated => status == AuthStatus.authenticated;
-  bool get isChecking => status == AuthStatus.checking;
-  bool get isStaff => user?.isStaff ?? false;
-  bool get isUnauthenticated => status == AuthStatus.unauthenticated;
+  bool get isAuthenticated  => status == AuthStatus.authenticated;
+  bool get isChecking       => status == AuthStatus.checking;
+  bool get isStaff          => user?.isStaff ?? false;
+  bool get isUnauthenticated=> status == AuthStatus.unauthenticated;
 
   AuthState copyWith({AuthStatus? status, LoggedUser? user, String? error}) => AuthState(
-        status: status ?? this.status,
-        user: user ?? this.user,
-        error: error ?? this.error,
-      );
+    status: status ?? this.status,
+    user:   user   ?? this.user,
+    error:  error,
+  );
 }

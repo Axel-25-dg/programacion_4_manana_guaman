@@ -13,20 +13,21 @@ class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final categoriesAsync = ref.watch(categoriesProvider);
-    final catalogState = ref.watch(catalogProvider);
-    final tt = Theme.of(context).textTheme;
+    final catalogState    = ref.watch(catalogProvider);
+    final tt              = Theme.of(context).textTheme;
 
     return Scaffold(
       body: CustomScrollView(
         slivers: [
+          // ── Hero ─────────────────────────────────────────
           SliverToBoxAdapter(
             child: Container(
-              width: double.infinity,
+              width:  double.infinity,
               padding: const EdgeInsets.fromLTRB(24, 72, 24, 48),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
+                  end:   Alignment.bottomCenter,
                   colors: [AppColors.surface2, AppColors.background],
                 ),
               ),
@@ -36,14 +37,14 @@ class HomeScreen extends ConsumerWidget {
                   Text(
                     'Descubre lo',
                     style: tt.headlineLarge?.copyWith(
-                      color: AppColors.textSecondary,
+                      color:      AppColors.textSecondary,
                       fontWeight: FontWeight.w300,
                     ),
                   ),
                   Text(
                     'extraordinario',
                     style: tt.displaySmall?.copyWith(
-                      color: AppColors.accent,
+                      color:      AppColors.accent,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -55,9 +56,9 @@ class HomeScreen extends ConsumerWidget {
                   const SizedBox(height: 24),
                   FilledButton.icon(
                     onPressed: () => context.go('/catalog'),
-                    icon: const Icon(Icons.grid_view_rounded, size: 18),
-                    label: const Text('Ver catálogo'),
-                    style: FilledButton.styleFrom(
+                    icon:      const Icon(Icons.grid_view_rounded, size: 18),
+                    label:     const Text('Ver catálogo'),
+                    style:     FilledButton.styleFrom(
                       backgroundColor: AppColors.accent,
                       foregroundColor: AppColors.onAccent,
                       shape: RoundedRectangleBorder(
@@ -69,10 +70,12 @@ class HomeScreen extends ConsumerWidget {
               ),
             ),
           ),
+
+          // ── Categorías ────────────────────────────────────
           SliverToBoxAdapter(
             child: categoriesAsync.when(
               loading: () => const SizedBox.shrink(),
-              error: (_, __) => const SizedBox.shrink(),
+              error:   (_, __) => const SizedBox.shrink(),
               data: (cats) {
                 final active = cats.where((c) => c.isActive).take(6).toList();
                 if (active.isEmpty) return const SizedBox.shrink();
@@ -94,10 +97,10 @@ class HomeScreen extends ConsumerWidget {
                     ),
                     SizedBox(
                       height: 80,
-                      child: ListView.separated(
-                        padding: const EdgeInsets.symmetric(horizontal: 24),
-                        scrollDirection: Axis.horizontal,
-                        itemCount: active.length,
+                      child:  ListView.separated(
+                        padding:          const EdgeInsets.symmetric(horizontal: 24),
+                        scrollDirection:  Axis.horizontal,
+                        itemCount:        active.length,
                         separatorBuilder: (_, __) => const SizedBox(width: 10),
                         itemBuilder: (_, i) {
                           final cat = active[i];
@@ -107,12 +110,12 @@ class HomeScreen extends ConsumerWidget {
                               context.go('/catalog');
                             },
                             child: Container(
-                              width: 110,
+                              width:   110,
                               padding: const EdgeInsets.all(10),
                               decoration: BoxDecoration(
-                                color: AppColors.surface,
+                                color:        AppColors.surface,
                                 borderRadius: BorderRadius.circular(12),
-                                border: Border.all(color: AppColors.border),
+                                border:       Border.all(color: AppColors.border),
                               ),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -121,13 +124,13 @@ class HomeScreen extends ConsumerWidget {
                                   const SizedBox(height: 4),
                                   Text(
                                     cat.name,
-                                    style: const TextStyle(
-                                      color: AppColors.textPrimary,
-                                      fontSize: 11,
-                                      fontWeight: FontWeight.w600,
+                                    style:    const TextStyle(
+                                      color:     AppColors.textPrimary,
+                                      fontSize:  11,
+                                      fontWeight:FontWeight.w600,
                                     ),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
+                                    maxLines:  1,
+                                    overflow:  TextOverflow.ellipsis,
                                     textAlign: TextAlign.center,
                                   ),
                                 ],
@@ -143,10 +146,12 @@ class HomeScreen extends ConsumerWidget {
               },
             ),
           ),
+
+          // ── Novedades — encabezado ─────────────────────────
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.fromLTRB(24, 0, 24, 16),
-              child: Row(
+              child:   Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text('Novedades', style: tt.titleLarge),
@@ -158,12 +163,14 @@ class HomeScreen extends ConsumerWidget {
               ),
             ),
           ),
+
+          // ── Novedades — grid ───────────────────────────────
           if (catalogState.isLoading && catalogState.products.isEmpty)
             const SliverToBoxAdapter(
               child: Center(
                 child: Padding(
                   padding: EdgeInsets.all(32),
-                  child: CircularProgressIndicator(color: AppColors.accent),
+                  child:   CircularProgressIndicator(color: AppColors.accent),
                 ),
               ),
             )
@@ -176,19 +183,20 @@ class HomeScreen extends ConsumerWidget {
                     final product = catalogState.products.take(4).toList()[i];
                     return ProductCard(
                       product: product,
-                      onTap: () => context.push('/catalog/${product.id}'),
+                      onTap:   () => context.push('/catalog/${product.id}'),
                     );
                   },
                   childCount: catalogState.products.take(4).length,
                 ),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 12,
-                  mainAxisSpacing: 12,
-                  childAspectRatio: 0.68,
+                  crossAxisCount:    2,
+                  crossAxisSpacing:  12,
+                  mainAxisSpacing:   12,
+                  childAspectRatio:  0.68,
                 ),
               ),
             ),
+
           const SliverToBoxAdapter(child: SizedBox(height: 32)),
         ],
       ),
