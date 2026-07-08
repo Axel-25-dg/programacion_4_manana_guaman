@@ -5,15 +5,37 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../theme/app_colors.dart';
 import '../../providers/auth_provider.dart';
-
+import '../../providers/image_upload_provider.dart';
+import '../../providers/profile_provider.dart';
+import '../../widgets/user_avatar.dart';
 
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(authProvider).user;
-    final tt   = Theme.of(context).textTheme;
+    final user         = ref.watch(authProvider).user;
+    final profileAsync = ref.watch(profileProvider);
+    final uploadState  = ref.watch(imageUploadProvider);
+    final tt           = Theme.of(context).textTheme;
+
+    ref.listen<ImageUploadState>(imageUploadProvider, (_, next) {
+      if (next is ImageUploadSuccess) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Avatar actualizado correctamente.')),
+        );
+        ref.invalidate(profileProvider);
+        ref.read(imageUploadProvider.notifier).reset();
+      } else if (next is ImageUploadError) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content:         Text(next.message),
+            backgroundColor: AppColors.error,
+          ),
+        );
+        ref.read(imageUploadProvider.notifier).reset();
+      }
+    });
 
     return Scaffold(
       body: SafeArea(
@@ -23,29 +45,23 @@ class ProfileScreen extends ConsumerWidget {
             children: [
               const SizedBox(height: 24),
 
-              // Avatar
-              Container(
-                width:  80, height: 80,
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [AppColors.accent, AppColors.accentLight],
-                    begin:  Alignment.topLeft,
-                    end:    Alignment.bottomRight,
+              // Avatar con tap para cambiar
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  UserAvatar(
+                    avatarUrl: profileAsync.valueOrNull?.avatarUrl,
+                    username:  user?.username,
+                    radius:    40,
+                    onTap: uploadState is ImageUploadLoading
+                        ? null
+                        : () => ref
+                            .read(imageUploadProvider.notifier)
+                            .pickAndUploadAvatar(),
                   ),
-                  shape: BoxShape.circle,
-                ),
-                child: Center(
-                  child: Text(
-                    (user?.username.isNotEmpty == true)
-                        ? user!.username[0].toUpperCase()
-                        : '?',
-                    style: const TextStyle(
-                      color:      AppColors.onAccent,
-                      fontSize:   34,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
+                  if (uploadState is ImageUploadLoading)
+                    const CircularProgressIndicator(),
+                ],
               ),
               const SizedBox(height: 16),
               Text(user?.username ?? '—', style: tt.headlineMedium),
@@ -70,7 +86,7 @@ class ProfileScreen extends ConsumerWidget {
                 ),
               const SizedBox(height: 32),
 
-              // Info
+              // Información de la cuenta
               Container(
                 width:   double.infinity,
                 padding: const EdgeInsets.all(20),
@@ -124,8 +140,6 @@ class ProfileScreen extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: 24),
-              const SizedBox(height: 24),
-              
 
               // Botón Admin — solo visible para staff
               if (user?.isStaff == true) ...[
@@ -145,7 +159,6 @@ class ProfileScreen extends ConsumerWidget {
               _LogoutButton(
                 onConfirm: () async {
                   await ref.read(authProvider.notifier).logout();
-                  if (context.mounted) context.go('/login');
                 },
               ),
               const SizedBox(height: 32),
@@ -168,7 +181,7 @@ class _LogoutButton extends StatelessWidget {
     child:  OutlinedButton.icon(
       onPressed: () => showDialog(
         context: context,
-        builder: (_) => AlertDialog(
+        builder: (dialogContext) => AlertDialog(
           backgroundColor: AppColors.surface,
           shape:           RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           title:           const Text('¿Cerrar sesión?',
@@ -179,13 +192,13 @@ class _LogoutButton extends StatelessWidget {
           ),
           actions: [
             TextButton(
- 
-              onPressed: () => Navigator.pop(context),
+              onPressed: () => Navigator.pop(dialogContext),
               child:     const Text('Cancelar'),
             ),
             TextButton(
               onPressed: () async {
-                Navigator.pop(context);
+                Navigator.of(dialogContext).pop();
+                await Future.delayed(const Duration(milliseconds: 100));
                 await onConfirm();
               },
               child: const Text(
