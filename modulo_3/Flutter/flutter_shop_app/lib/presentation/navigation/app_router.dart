@@ -18,6 +18,12 @@ import '../screens/auth/login_screen.dart';
 import '../screens/auth/register_screen.dart';
 import '../screens/catalog/catalog_screen.dart';
 import '../screens/catalog/home_screen.dart';
+import '../screens/admin/dashboard_screen.dart';
+import '../screens/admin/categories_admin_screen.dart';
+import '../screens/admin/products_admin_screen.dart';
+import '../screens/admin/orders_admin_screen.dart';
+import '../screens/admin/order_admin_detail_screen.dart';
+import '../widgets/admin_shell.dart';
 import 'public_shell.dart';
 
 // ignore: unused_element
@@ -121,36 +127,37 @@ final routerProvider = Provider<GoRouter>((ref) {
         ),
       ),
       GoRoute(
-        path:    '/admin/categories',
+        path: '/admin/categories',
         builder: (_, state) => AdminShell(
-          title:        'Categorías',
+          title: 'Categorías',
           currentRoute: state.matchedLocation,
-          child:        const CategoriesAdminScreen(),
+          child: const CategoriesAdminScreen(),
         ),
       ),
       GoRoute(
-        path:    '/admin/products',
+        path: '/admin/products',
         builder: (_, state) => AdminShell(
-          title:        'Productos',
+          title: 'Productos',
           currentRoute: state.matchedLocation,
-          child:        const ProductsAdminScreen(),
+          child: const ProductsAdminScreen(),
         ),
       ),
       GoRoute(
         path: '/admin/orders',
         builder: (_, state) => AdminShell(
-          title:        'Pedidos',
+          title: 'Pedidos',
           currentRoute: state.matchedLocation,
-          child:        const _AdminPlaceholder('Pedidos admin — M10'),
+          child: const OrdersAdminScreen(),
         ),
       ),
       GoRoute(
         path: '/admin/orders/:id',
         builder: (_, state) => AdminShell(
-          title:        'Detalle pedido',
+          title: 'Detalle pedido #${state.pathParameters['id']}',
           currentRoute: '/admin/orders',
-          child:        _AdminPlaceholder(
-              'Pedido #${state.pathParameters['id']} — M10'),
+          child: OrderAdminDetailScreen(
+            orderId: int.parse(state.pathParameters['id']!),
+          ),
         ),
       ),
       
