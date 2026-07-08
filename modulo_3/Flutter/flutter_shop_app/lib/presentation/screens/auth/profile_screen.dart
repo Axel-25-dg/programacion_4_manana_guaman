@@ -153,6 +153,16 @@ class ProfileScreen extends ConsumerWidget {
                   ),
                 ),
                 const SizedBox(height: 12),
+                SizedBox(
+                  width:  double.infinity,
+                  height: 52,
+                  child:  ElevatedButton.icon(
+                    onPressed: () => context.push('/send-notification'),
+                    icon:  const Icon(Icons.send_outlined),
+                    label: const Text('Enviar notificación'),
+                  ),
+                ),
+                const SizedBox(height: 12),
               ],
 
               // Botón logout
