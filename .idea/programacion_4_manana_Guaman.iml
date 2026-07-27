@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/modulo_3/Flutter/flutter_shop_app/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/modulo_3/Flutter/flutter_shop_app/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/modulo_3/Flutter/flutter_shop_app/build" />
+      <excludeFolder url="file://$MODULE_DIR$/modulo_3/Flutter/modulo06_widgets/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/modulo_3/Flutter/modulo06_widgets/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/modulo_3/Flutter/modulo06_widgets/build" />
+      <excludeFolder url="file://$MODULE_DIR$/modulo_3/Flutter/modulo06_widgets_mp/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/modulo_3/Flutter/modulo06_widgets_mp/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/modulo_3/Flutter/modulo06_widgets_mp/build" />
+      <excludeFolder url="file://$MODULE_DIR$/modulo_3/Flutter/modulo07_layouts/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/modulo_3/Flutter/modulo07_layouts/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/modulo_3/Flutter/modulo07_layouts/build" />
+      <excludeFolder url="file://$MODULE_DIR$/modulo_3/Flutter/modulo08_material3/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/modulo_3/Flutter/modulo08_material3/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/modulo_3/Flutter/modulo08_material3/build" />
+      <excludeFolder url="file://$MODULE_DIR$/modulo_3/Flutter/modulo10_riverpod/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/modulo_3/Flutter/modulo10_riverpod/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/modulo_3/Flutter/modulo10_riverpod/build" />
+      <excludeFolder url="file://$MODULE_DIR$/modulo_3/Flutter/modulo11_gorouter/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/modulo_3/Flutter/modulo11_gorouter/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/modulo_3/Flutter/modulo11_gorouter/build" />
+      <excludeFolder url="file://$MODULE_DIR$/modulo_3/Flutter/modulo12_api/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/modulo_3/Flutter/modulo12_api/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/modulo_3/Flutter/modulo12_api/build" />
+      <excludeFolder url="file://$MODULE_DIR$/modulo_3/Flutter/modulo12_api_mp/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/modulo_3/Flutter/modulo12_api_mp/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/modulo_3/Flutter/modulo12_api_mp/build" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>

@@ -12,7 +12,7 @@ import 'widgets/customized_sized_box.dart';
 // │  4  Paso 4  Stack + Positioned — AvatarBadge                   │
 // │  5  Paso 5  SizedBox, Padding, Align, Wrap                      │
 // └──────────────────────────────────────────────────────────────────┘
-const int paso = 5;
+const int paso = 1;
 
 void main() => runApp(MaterialApp(
   debugShowCheckedModeBanner: false,
