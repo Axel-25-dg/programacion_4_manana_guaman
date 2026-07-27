@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="NoctuleWorkspaceSettings">
+    <fileSettings>
+      <settings filePath="C:\Users\henry\Desktop\programacion_ute\programacion_4_manana_Guaman\modulo_3\Flutter\modulo06_widgets_mp\ios\Flutter\ephemeral\Packages\FlutterGeneratedPluginSwiftPackage\Package.swift">
+        <projectSettings projectType="noctule.spm">
+          <filePath>$PROJECT_DIR$/modulo_3/Flutter/modulo06_widgets_mp/ios/Flutter/ephemeral/Packages/FlutterGeneratedPluginSwiftPackage/Package.swift</filePath>
+        </projectSettings>
+      </settings>
+      <settings filePath="C:\Users\henry\Desktop\programacion_ute\programacion_4_manana_Guaman\modulo_3\Flutter\modulo06_widgets_mp\macos\Flutter\ephemeral\Packages\FlutterGeneratedPluginSwiftPackage\Package.swift">
+        <projectSettings projectType="noctule.spm">
+          <filePath>$PROJECT_DIR$/modulo_3/Flutter/modulo06_widgets_mp/macos/Flutter/ephemeral/Packages/FlutterGeneratedPluginSwiftPackage/Package.swift</filePath>
+        </projectSettings>
+      </settings>
+      <settings filePath="C:\Users\henry\Desktop\programacion_ute\programacion_4_manana_Guaman\modulo_3\Flutter\modulo08_material3\ios\Flutter\ephemeral\Packages\FlutterGeneratedPluginSwiftPackage\Package.swift">
+        <projectSettings projectType="noctule.spm">
+          <filePath>$PROJECT_DIR$/modulo_3/Flutter/modulo08_material3/ios/Flutter/ephemeral/Packages/FlutterGeneratedPluginSwiftPackage/Package.swift</filePath>
+        </projectSettings>
+      </settings>
+      <settings filePath="C:\Users\henry\Desktop\programacion_ute\programacion_4_manana_Guaman\modulo_3\Flutter\modulo08_material3\macos\Flutter\ephemeral\Packages\FlutterGeneratedPluginSwiftPackage\Package.swift">
+        <projectSettings projectType="noctule.spm">
+          <filePath>$PROJECT_DIR$/modulo_3/Flutter/modulo08_material3/macos/Flutter/ephemeral/Packages/FlutterGeneratedPluginSwiftPackage/Package.swift</filePath>
+        </projectSettings>
+      </settings>
+      <settings filePath="C:\Users\henry\Desktop\programacion_ute\programacion_4_manana_Guaman\modulo_3\Flutter\modulo08_material3_mp\ios\Flutter\ephemeral\Packages\FlutterGeneratedPluginSwiftPackage\Package.swift">
+        <projectSettings projectType="noctule.spm">
+          <filePath>$PROJECT_DIR$/modulo_3/Flutter/modulo08_material3_mp/ios/Flutter/ephemeral/Packages/FlutterGeneratedPluginSwiftPackage/Package.swift</filePath>
+        </projectSettings>
+      </settings>
+      <settings filePath="C:\Users\henry\Desktop\programacion_ute\programacion_4_manana_Guaman\modulo_3\Flutter\modulo08_material3_mp\macos\Flutter\ephemeral\Packages\FlutterGeneratedPluginSwiftPackage\Package.swift">
+        <projectSettings projectType="noctule.spm">
+          <filePath>$PROJECT_DIR$/modulo_3/Flutter/modulo08_material3_mp/macos/Flutter/ephemeral/Packages/FlutterGeneratedPluginSwiftPackage/Package.swift</filePath>
+        </projectSettings>
+      </settings>
+      <settings filePath="C:\Users\henry\Desktop\programacion_ute\programacion_4_manana_Guaman\modulo_4\02-hooks_mp\node_modules\@expo\expo-modules-macros-plugin\apple\Package.swift">
+        <projectSettings projectType="noctule.spm">
+          <filePath>$PROJECT_DIR$/modulo_4/02-hooks_mp/node_modules/@expo/expo-modules-macros-plugin/apple/Package.swift</filePath>
+        </projectSettings>
+      </settings>
+      <settings filePath="C:\Users\henry\Desktop\programacion_ute\programacion_4_manana_Guaman\modulo_4\02-hooks_mp\node_modules\expo-modules-jsi\apple\Package.swift">
+        <projectSettings projectType="noctule.spm">
+          <filePath>$PROJECT_DIR$/modulo_4/02-hooks_mp/node_modules/expo-modules-jsi/apple/Package.swift</filePath>
+        </projectSettings>
+      </settings>
+      <settings filePath="C:\Users\henry\Desktop\programacion_ute\programacion_4_manana_Guaman\modulo_4\02-hooks_mp\node_modules\react-native\Libraries\ReactNativeDependencies\Package.swift">
+        <projectSettings projectType="noctule.spm">
+          <filePath>$PROJECT_DIR$/modulo_4/02-hooks_mp/node_modules/react-native/Libraries/ReactNativeDependencies/Package.swift</filePath>
+        </projectSettings>
+      </settings>
+      <settings filePath="C:\Users\henry\Desktop\programacion_ute\programacion_4_manana_Guaman\modulo_4\mi-app_mp\node_modules\react-native\Libraries\ReactNativeDependencies\Package.swift">
+        <projectSettings projectType="noctule.spm">
+          <filePath>$PROJECT_DIR$/modulo_4/mi-app_mp/node_modules/react-native/Libraries/ReactNativeDependencies/Package.swift</filePath>
+        </projectSettings>
+      </settings>
+    </fileSettings>
+  </component>
+</project>
